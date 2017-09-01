@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:id="@+id/list_item">
+
+    <ImageButton
+        android:id="@+id/item_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <TextView
+        style="@style/Text.Primary"
+        android:id="@+id/member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:text="NickLJackson"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="81dp" />
+    <TextView
+        style="@style/Text.Secondary"
+        android:id="@+id/member_status"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:text="Counter-Strike:Global Offensive"
+        tools:layout_editor_absoluteY="48dp"
+        tools:layout_editor_absoluteX="81dp" />
+</android.support.constraint.ConstraintLayout>

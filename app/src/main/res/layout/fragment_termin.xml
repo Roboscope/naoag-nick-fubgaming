@@ -2,12 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nickljackson.fubgaming.TerminFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context="com.nickljackson.fubgaming.TerminFragment"
+    android:id="@+id/termin_fragment">
+    <LinearLayout
+        android:id="@+id/calendar1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="termin" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </FrameLayout>
