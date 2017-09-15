@@ -1,10 +1,10 @@
 package com.nickljackson.fubgaming.data;
 
-import android.content.Context;
-import android.widget.Toast;
+import com.nickljackson.fubgaming.service.SteamService;
 import com.nickljackson.fubgaming.service.SteamServiceCallback;
 
-import java.nio.channels.Channel;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,34 +14,56 @@ import java.util.List;
 
 public class ListItemDataSource implements ListItemDataSourceInterface, SteamServiceCallback {
 
-    private Context context;
-    private static final String[] STEAMIDS = {"76561198142027924", "76561198170537355", "76561198264064062",
-    "76561198091280667", "76561198182175647", "76561198105737739", "76561198171801778"};
+    private String[] steamID = {"1234", "123"};
+    private int[] lastLogOff = new int[steamID.length];
+    private int[] status = new int[steamID.length];
+    private String[] gameID = new String[steamID.length];
+    private String[] name = new String[steamID.length];
+    private String[] avatarURL = new String[steamID.length];
+
+    private SteamService service;
+
+    int i;
 
     @Override
     public List<ListItem> getListOfData() {
         ArrayList<ListItem> listOfData = new ArrayList<>();
-
+        for(int v = 0; v < steamID.length; v++){
+            if(status[v] == 0){
+                listOfData.add(new ListItem(String.valueOf(lastLogOff[v]), 0, name[v], avatarURL[v]));
+            } else if(status[v] == 1){
+                listOfData.add(new ListItem(String.valueOf(status[v]), 1, name[v], avatarURL[v]));
+            } else{
+                listOfData.add(new ListItem(String.valueOf(gameID), 2, name[v], avatarURL[v]));
+            }
+        }
         return null;
     }
 
-    public ListItemDataSource(Context pContext) {
-        context = pContext;
+    public ListItemDataSource() {
+        service = new SteamService(this);
+        getData();
     }
 
-    public void setData(){
-        for(int i = 0; i< STEAMIDS.length; i++){
 
+    private void getData(){
+        for(i = 0; i < steamID.length; i++){
+            service.refresh(steamID[i]);
         }
     }
 
     @Override
-    public void serviceSuccess(Channel channel) {
+    public void serviceSuccess(JSONObject queryResults) {
+        avatarURL[i] = queryResults.optString("avatarmedium");
+        name[i] = queryResults.optString("personaname");
+        lastLogOff[i] = queryResults.optInt("lastlogoff");
+        status[i] = queryResults.optInt("personastate");
+        gameID[i] = queryResults.optString("gameid");
 
     }
 
     @Override
     public void serviceFailure(Exception exception) {
-        Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
+
     }
 }

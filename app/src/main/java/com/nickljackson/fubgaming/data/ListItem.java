@@ -10,7 +10,7 @@ public class ListItem {
     private String name;
     private String avatarURL;
 
-    public ListItem(String status, String name, String avatarURL) {
+    public ListItem(String status, int statusStructure, String name, String avatarURL) {
         this.status = status;
         this.name = name;
         this.avatarURL = avatarURL;
