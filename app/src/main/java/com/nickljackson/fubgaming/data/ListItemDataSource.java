@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ListItemDataSource implements ListItemDataSourceInterface, SteamServiceCallback {
 
-    private String[] steamID = {"1234", "123"};
+    private String[] steamID = {"76561197960435530", "76561198264064062"};
     private int[] lastLogOff = new int[steamID.length];
     private int[] status = new int[steamID.length];
     private String[] gameID = new String[steamID.length];

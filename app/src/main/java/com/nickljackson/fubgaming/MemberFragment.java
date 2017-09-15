@@ -3,6 +3,7 @@ package com.nickljackson.fubgaming;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,30 +41,42 @@ public class MemberFragment extends Fragment implements ViewInterface{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         layoutInflater = inflater;
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_member);
+        View view = layoutInflater.inflate(R.layout.fragment_member, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_member);
 
         controller = new Controller(this, new ListItemDataSource());
-        return layoutInflater.inflate(R.layout.fragment_member, container, false);
+        return view;
     }
 
     @Override
     public void setUpAdapterAndView(List<ListItem> listOfData) {
-
+        this.listOfData = listOfData;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new CustomAdapter();
+        recyclerView.setAdapter(adapter);
     }
 
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder>{
 
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v  = layoutInflater.inflate(R.layout.item_member, parent, false);
 
 
-
-            return null;
+            return new CustomViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, int position) {
+            ListItem currentItem = listOfData.get(position);
 
+            holder.avatar.setBaseline(3);
+            holder.name.setText(
+                    currentItem.getName()
+            );
+            holder.status.setText(
+                    currentItem.getStatus()
+            );
         }
 
         @Override
@@ -73,7 +86,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
 
         class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private View avatar;
+            private ImageView avatar;
             private TextView name;
             private TextView status;
             private ViewGroup container;
@@ -82,10 +95,12 @@ public class MemberFragment extends Fragment implements ViewInterface{
             public CustomViewHolder(View itemView){
                 super(itemView);
 
-                this.avatar = itemView.findViewById(R.id.item_image);
+                this.avatar = (ImageView) itemView.findViewById(R.id.item_image);
                 this.name = (TextView) itemView.findViewById(R.id.member_name);
                 this.status = (TextView) itemView.findViewById(R.id.member_status);
                 this.container = (ViewGroup) itemView.findViewById(R.id.list_item);
+
+                this.container.setOnClickListener(this);
             }
 
             @Override

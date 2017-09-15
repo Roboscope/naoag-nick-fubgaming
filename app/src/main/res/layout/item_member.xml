@@ -6,7 +6,7 @@
     android:layout_height="88dp"
     android:id="@+id/list_item">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/item_image"
         android:layout_width="48dp"
         android:layout_height="48dp"

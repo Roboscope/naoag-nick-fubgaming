@@ -26,7 +26,7 @@ public class Controller {
 
     public void onListItemClick(ListItem listItem){
 
-        //Write here what should happens after a ListItemOnClick
+        //Write here what should happenz after a ListItemOnClick
     }
 }
 
