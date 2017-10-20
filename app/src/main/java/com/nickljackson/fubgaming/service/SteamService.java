@@ -2,10 +2,10 @@ package com.nickljackson.fubgaming.service;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,7 +20,7 @@ public class SteamService {
     private SteamServiceCallback callback;
     private String steamID;
     private Exception error;
-    public JSONObject queryResults;
+    public JSONArray queryResults;
 
     public SteamService(SteamServiceCallback callback) {
         this.callback = callback;
@@ -34,7 +34,7 @@ public class SteamService {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... params) {
-                String endpoint = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=DE3840B166C98E213D1866CCB6188AF4ßsteamids=" + steamID;
+                String endpoint = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=DE3840B166C98E213D1866CCB6188AF4&steamids=" + steamID;
                 try{
                     URL url = new URL(endpoint);
 
@@ -67,12 +67,15 @@ public class SteamService {
                 try{
                     JSONObject data = new JSONObject(s);
 
-                    queryResults = data.optJSONObject("response").optJSONObject("players");
+                    queryResults = data.optJSONObject("response").optJSONArray("players");
+                    for(int i = 0; i < queryResults.length(); i++){
+                        callback.serviceProgress(queryResults.getJSONObject(i));
 
-                    callback.serviceSuccess(queryResults);
+                    }
 
+                    callback.serviceSuccess();
                 } catch (JSONException e){
-                    e.printStackTrace();;
+                    e.printStackTrace();
                 }
             }
 

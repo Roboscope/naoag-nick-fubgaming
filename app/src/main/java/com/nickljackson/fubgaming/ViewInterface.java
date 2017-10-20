@@ -2,6 +2,8 @@ package com.nickljackson.fubgaming;
 
 import com.nickljackson.fubgaming.data.ListItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,5 +12,5 @@ import java.util.List;
 
 public interface ViewInterface {
 
-    void setUpAdapterAndView(List<ListItem> listOfData);
+    void updateAdapterAndView(ArrayList<ListItem> listOfData);
 }

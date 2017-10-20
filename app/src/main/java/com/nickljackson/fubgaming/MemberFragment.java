@@ -15,6 +15,8 @@ import com.nickljackson.fubgaming.Logic.Controller;
 import com.nickljackson.fubgaming.data.ListItem;
 import com.nickljackson.fubgaming.data.ListItemDataSource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public class MemberFragment extends Fragment implements ViewInterface{
 
-    private List<ListItem> listOfData;
+    private ArrayList<ListItem> listOfData = new ArrayList<>();
 
     private LayoutInflater layoutInflater;
     private RecyclerView recyclerView;
@@ -45,17 +47,17 @@ public class MemberFragment extends Fragment implements ViewInterface{
         View view = layoutInflater.inflate(R.layout.fragment_member, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_member);
 
-        controller = new Controller(this, new ListItemDataSource(getContext()));
-        controller.getListFromDataSource();
+        controller = new Controller(this, new ListItemDataSource(getContext(), this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new CustomAdapter();
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
     @Override
-    public void setUpAdapterAndView(List<ListItem> pListOfData) {
+    public void updateAdapterAndView(ArrayList<ListItem> pListOfData) {
         this.listOfData = pListOfData;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new CustomAdapter();
-        recyclerView.setAdapter(adapter);
+        this.adapter.notifyDataSetChanged();
     }
 
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder>{

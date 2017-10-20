@@ -1,5 +1,6 @@
 package com.nickljackson.fubgaming.service;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.nio.channels.Channel;
@@ -9,6 +10,7 @@ import java.nio.channels.Channel;
  */
 
 public interface SteamServiceCallback {
-    void serviceSuccess(JSONObject queryResults);
-    void serviceFailure(Exception exception); 
+    void serviceProgress(JSONObject queryResults);
+    void serviceFailure(Exception exception);
+    void serviceSuccess();
 }
