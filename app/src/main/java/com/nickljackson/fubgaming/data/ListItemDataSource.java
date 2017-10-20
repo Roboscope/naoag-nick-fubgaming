@@ -1,5 +1,9 @@
 package com.nickljackson.fubgaming.data;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.widget.Toast;
+
 import com.nickljackson.fubgaming.service.SteamService;
 import com.nickljackson.fubgaming.service.SteamServiceCallback;
 
@@ -22,7 +26,9 @@ public class ListItemDataSource implements ListItemDataSourceInterface, SteamSer
     private String[] avatarURL = new String[steamID.length];
 
     private SteamService service;
+    private ProgressDialog dialog;
 
+    Context context;
     int i;
 
     @Override
@@ -40,9 +46,13 @@ public class ListItemDataSource implements ListItemDataSourceInterface, SteamSer
         return null;
     }
 
-    public ListItemDataSource() {
+    public ListItemDataSource(Context pContext) {
+        context = pContext;
         service = new SteamService(this);
         getData();
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading...");
+        dialog.show();;
     }
 
 
@@ -64,6 +74,7 @@ public class ListItemDataSource implements ListItemDataSourceInterface, SteamSer
 
     @Override
     public void serviceFailure(Exception exception) {
-
+        dialog.hide();
+        Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

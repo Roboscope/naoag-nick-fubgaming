@@ -31,6 +31,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
 
     private Controller controller;
 
+
     public MemberFragment() {
         // Required empty public constructor
     }
@@ -44,13 +45,14 @@ public class MemberFragment extends Fragment implements ViewInterface{
         View view = layoutInflater.inflate(R.layout.fragment_member, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_member);
 
-        controller = new Controller(this, new ListItemDataSource());
+        controller = new Controller(this, new ListItemDataSource(getContext()));
+        controller.getListFromDataSource();
         return view;
     }
 
     @Override
-    public void setUpAdapterAndView(List<ListItem> listOfData) {
-        this.listOfData = listOfData;
+    public void setUpAdapterAndView(List<ListItem> pListOfData) {
+        this.listOfData = pListOfData;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CustomAdapter();
         recyclerView.setAdapter(adapter);
