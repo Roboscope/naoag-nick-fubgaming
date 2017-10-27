@@ -74,13 +74,14 @@ public class MemberFragment extends Fragment implements ViewInterface{
         public void onBindViewHolder(CustomViewHolder holder, int position) {
             ListItem currentItem = listOfData.get(position);
 
-            holder.avatar.setBaseline(3);
+            holder.avatar.setImageDrawable(currentItem.getAvatar());
             holder.name.setText(
                     currentItem.getName()
             );
             holder.status.setText(
                     currentItem.getStatus()
             );
+
         }
 
         @Override
@@ -102,6 +103,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
                 this.avatar = (ImageView) itemView.findViewById(R.id.item_image);
                 this.name = (TextView) itemView.findViewById(R.id.member_name);
                 this.status = (TextView) itemView.findViewById(R.id.member_status);
+                this.avatar = (ImageView) itemView.findViewById(R.id.item_image);
                 this.container = (ViewGroup) itemView.findViewById(R.id.list_item);
 
                 this.container.setOnClickListener(this);

@@ -2,6 +2,11 @@ package com.nickljackson.fubgaming.data;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Toast;
@@ -12,6 +17,12 @@ import com.nickljackson.fubgaming.service.SteamServiceCallback;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +33,7 @@ import java.util.List;
 
 public class ListItemDataSource implements SteamServiceCallback {
 
-    private String[] steamID = {"76561197960435530", "76561198264064062"};
+    private String[] steamID = {"76561198105737739", "76561198144165775", "76561198264064062", "76561198182175647", "76561198170537355", "76561198171801778", "76561198142027924", "76561198091280667"};
     private ArrayList<ListItem> listOfData = new ArrayList<>();
 
     private SteamService service;
@@ -54,7 +65,7 @@ public class ListItemDataSource implements SteamServiceCallback {
     }
 
     @Override
-    public void serviceProgress(JSONObject queryResults) {
+    public void refreshServiceProgress(JSONObject queryResults) {
 
         String avatarURL = queryResults.optString("avatarmedium");
         String name = queryResults.optString("personaname");
@@ -94,7 +105,7 @@ public class ListItemDataSource implements SteamServiceCallback {
         }
 
 
-        listOfData.add(new ListItem(statusString, name, avatarURL));
+        listOfData.add(new ListItem(statusString, name, loadImageFromURL(avatarURL, name)));
 
 
     }
@@ -104,14 +115,24 @@ public class ListItemDataSource implements SteamServiceCallback {
     }
 
     @Override
-    public void serviceFailure(Exception exception) {
+    public void refreshServiceFailure(Exception exception) {
         dialog.hide();
         Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void serviceSuccess() {
+    public void refreshServiceSuccess() {
         dialog.hide();
         viewInterface.updateAdapterAndView(listOfData);
+    }
+
+    public Drawable loadImageFromURL(String src, String name){
+        try{
+            InputStream is = (InputStream) new URL(src).getContent();
+            Drawable d = Drawable.createFromStream(is, name);
+            return d;
+        } catch(Exception e){
+            return null;
+        }
     }
 }

@@ -60,7 +60,7 @@ public class SteamService {
             @Override
             protected void onPostExecute(String s) {
                 if( s == null && error != null){
-                    callback.serviceFailure(error);
+                    callback.refreshServiceFailure(error);
                     return;
                 }
 
@@ -69,11 +69,11 @@ public class SteamService {
 
                     queryResults = data.optJSONObject("response").optJSONArray("players");
                     for(int i = 0; i < queryResults.length(); i++){
-                        callback.serviceProgress(queryResults.getJSONObject(i));
+                        callback.refreshServiceProgress(queryResults.getJSONObject(i));
 
                     }
 
-                    callback.serviceSuccess();
+                    callback.refreshServiceSuccess();
                 } catch (JSONException e){
                     e.printStackTrace();
                 }

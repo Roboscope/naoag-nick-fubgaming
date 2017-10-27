@@ -1,5 +1,8 @@
 package com.nickljackson.fubgaming.data;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by Nick on 10.08.2017.
  */
@@ -8,12 +11,12 @@ public class ListItem {
 
     private String status;
     private String name;
-    private String avatarURL;
+    private Drawable avatar;
 
-    public ListItem(String status, String name, String avatarURL) {
+    public ListItem(String status, String name, Drawable avatar) {
         this.status = status;
         this.name = name;
-        this.avatarURL = avatarURL;
+        this.avatar = avatar;
     }
 
     public String getStatus() {
@@ -32,11 +35,11 @@ public class ListItem {
         this.name = name;
     }
 
-    public String getAvatarURL() {
-        return avatarURL;
+    public Drawable getAvatar() {
+        return avatar;
     }
 
-    public void setAvatarURL(String avatarURL) {
-        this.avatarURL = avatarURL;
+    public void setAvatar(Drawable avatar) {
+        this.avatar = avatar;
     }
 }

@@ -10,7 +10,7 @@ import java.nio.channels.Channel;
  */
 
 public interface SteamServiceCallback {
-    void serviceProgress(JSONObject queryResults);
-    void serviceFailure(Exception exception);
-    void serviceSuccess();
+    void refreshServiceProgress(JSONObject queryResults);
+    void refreshServiceFailure(Exception exception);
+    void refreshServiceSuccess();
 }
