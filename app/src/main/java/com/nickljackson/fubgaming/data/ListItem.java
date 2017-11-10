@@ -11,12 +11,12 @@ public class ListItem {
 
     private String status;
     private String name;
-    private Drawable avatar;
+    private String avatarURL;
 
-    public ListItem(String status, String name, Drawable avatar) {
+    public ListItem(String status, String name, String avatar) {
         this.status = status;
         this.name = name;
-        this.avatar = avatar;
+        this.avatarURL = avatar;
     }
 
     public String getStatus() {
@@ -35,11 +35,11 @@ public class ListItem {
         this.name = name;
     }
 
-    public Drawable getAvatar() {
-        return avatar;
+    public String getAvatar() {
+        return avatarURL;
     }
 
-    public void setAvatar(Drawable avatar) {
-        this.avatar = avatar;
+    public void setAvatar(String avatar) {
+        this.avatarURL = avatar;
     }
 }

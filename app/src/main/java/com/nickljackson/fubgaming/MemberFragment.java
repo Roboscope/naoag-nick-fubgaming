@@ -3,6 +3,7 @@ package com.nickljackson.fubgaming;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.nickljackson.fubgaming.Logic.Controller;
 import com.nickljackson.fubgaming.data.ListItem;
 import com.nickljackson.fubgaming.data.ListItemDataSource;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,28 +32,39 @@ public class MemberFragment extends Fragment implements ViewInterface{
     private LayoutInflater layoutInflater;
     private RecyclerView recyclerView;
     private CustomAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ListItemDataSource dataSource;
 
     private Controller controller;
-
 
     public MemberFragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         layoutInflater = inflater;
-        View view = layoutInflater.inflate(R.layout.fragment_member, container, false);
+        final View view = layoutInflater.inflate(R.layout.fragment_member, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_member);
 
         controller = new Controller(this, new ListItemDataSource(getContext(), this));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CustomAdapter();
         recyclerView.setAdapter(adapter);
+
+        swipeRefreshLayout = new SwipeRefreshLayout(getContext());
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener(){
+                    @Override
+                    public void onRefresh() {
+                        controller.update();
+                    }
+                }
+        );
         return view;
+
     }
 
     @Override
@@ -59,6 +72,10 @@ public class MemberFragment extends Fragment implements ViewInterface{
         this.listOfData = pListOfData;
         this.adapter.notifyDataSetChanged();
     }
+
+
+
+
 
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder>{
 
@@ -74,7 +91,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
         public void onBindViewHolder(CustomViewHolder holder, int position) {
             ListItem currentItem = listOfData.get(position);
 
-            holder.avatar.setImageDrawable(currentItem.getAvatar());
+            Picasso.with(getContext()).load(currentItem.getAvatar()).into(holder.avatar);
             holder.name.setText(
                     currentItem.getName()
             );
@@ -121,4 +138,6 @@ public class MemberFragment extends Fragment implements ViewInterface{
             }
         }
     }
+
+
 }

@@ -22,5 +22,9 @@ public class Controller {
 
         //Write here what should happen after a ListItemOnClick
     }
+
+    public void update(){
+        dataSource.refresh();
+    }
 }
 

@@ -81,7 +81,17 @@ public class SteamService {
 
         }.execute(steamID);
 
+    }
+
+    public void getGame(final String gameID){
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                String endpoint =
+                return null;
+            }
         }
     }
+}
 
 

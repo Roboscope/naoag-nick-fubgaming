@@ -35,6 +35,8 @@ public class ListItemDataSource implements SteamServiceCallback {
 
     private String[] steamID = {"76561198105737739", "76561198144165775", "76561198264064062", "76561198182175647", "76561198170537355", "76561198171801778", "76561198142027924", "76561198091280667"};
     private ArrayList<ListItem> listOfData = new ArrayList<>();
+    private ArrayList<String> listOfGames = new ArrayList<>();
+
 
     private SteamService service;
     private ProgressDialog dialog;
@@ -54,6 +56,9 @@ public class ListItemDataSource implements SteamServiceCallback {
 
     }
 
+    public void refresh(){
+        getData();
+    }
 
     private void getData(){
         StringBuilder steamIds = new StringBuilder();
@@ -102,10 +107,12 @@ public class ListItemDataSource implements SteamServiceCallback {
             }
         } else {
             statusString = String.valueOf(gameID);
+            listOfGames.add(gameID);
+
         }
 
 
-        listOfData.add(new ListItem(statusString, name, loadImageFromURL(avatarURL, name)));
+        listOfData.add(new ListItem(statusString, name, avatarURL));
 
 
     }
@@ -124,15 +131,7 @@ public class ListItemDataSource implements SteamServiceCallback {
     public void refreshServiceSuccess() {
         dialog.hide();
         viewInterface.updateAdapterAndView(listOfData);
+
     }
 
-    public Drawable loadImageFromURL(String src, String name){
-        try{
-            InputStream is = (InputStream) new URL(src).getContent();
-            Drawable d = Drawable.createFromStream(is, name);
-            return d;
-        } catch(Exception e){
-            return null;
-        }
-    }
 }
