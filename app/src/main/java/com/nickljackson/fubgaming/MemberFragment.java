@@ -54,7 +54,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
         adapter = new CustomAdapter();
         recyclerView.setAdapter(adapter);
 
-        swipeRefreshLayout = new SwipeRefreshLayout(getContext());
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener(){
                     @Override
@@ -71,6 +71,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
     public void updateAdapterAndView(ArrayList<ListItem> pListOfData) {
         this.listOfData = pListOfData;
         this.adapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 

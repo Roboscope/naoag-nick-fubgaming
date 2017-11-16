@@ -18,16 +18,11 @@ import java.net.URLConnection;
 
 public class SteamService {
     private SteamServiceCallback callback;
-    private String steamID;
     private Exception error;
     public JSONArray queryResults;
 
     public SteamService(SteamServiceCallback callback) {
         this.callback = callback;
-    }
-
-    public String getSteamID() {
-        return steamID;
     }
 
     public void refresh(final String steamID){
@@ -87,10 +82,10 @@ public class SteamService {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... params) {
-                String endpoint =
+
                 return null;
             }
-        }
+        };
     }
 }
 

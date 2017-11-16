@@ -130,8 +130,21 @@ public class ListItemDataSource implements SteamServiceCallback {
     @Override
     public void refreshServiceSuccess() {
         dialog.hide();
+
         viewInterface.updateAdapterAndView(listOfData);
 
+    }
+
+    public void sortListOfData(){
+        ArrayList<ListItem> online = new ArrayList<>();
+        ArrayList<ListItem> offline = new ArrayList<>();
+
+        for(int i = 0; i <listOfData.size(); i++) {
+        }
+
+
+                //SORTIEREN!!!
+        }
     }
 
 }
