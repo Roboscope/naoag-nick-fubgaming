@@ -102,7 +102,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
         }
 
         @Override
-        public int getItemCount() {
+        public int getItemCount()  {
             return listOfData.size();
         }
 
