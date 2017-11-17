@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 /**
  * Created by Nick on 11.08.2017.
@@ -78,15 +79,7 @@ public class SteamService {
 
     }
 
-    public void getGame(final String gameID){
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected String doInBackground(String... params) {
 
-                return null;
-            }
-        };
-    }
 }
 
 

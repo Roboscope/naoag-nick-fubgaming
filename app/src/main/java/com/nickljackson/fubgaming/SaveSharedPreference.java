@@ -10,8 +10,8 @@ import android.preference.PreferenceManager;
 
 public class SaveSharedPreference {
 
-    static final String USER_NAME = "username";
-    static final String STEAM_ID = "000000000";
+    static final String USER_NAME = null;
+    static final String STEAM_ID = null;
 
 
         static SharedPreferences getSharedPreferences(Context ctx){
@@ -33,7 +33,7 @@ public class SaveSharedPreference {
             return getSharedPreferences(ctx).getString(USER_NAME, "");
         }
         public static String getSteamId(Context ctx){
-            return getSharedPreferences(ctx).getString(STEAM_ID, "");
+            return STEAM_ID;
         }
 
         public static void clearSharedPreferences(Context ctx){

@@ -1,5 +1,6 @@
 package com.nickljackson.fubgaming;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
     NavigationView mNavView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(SaveSharedPreference.getSteamId(this) == null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            LoginActivity loginActivity = new LoginActivity();
+            loginActivity.startActivity(intent);
+        }
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // setzt das View für die Actionbar
