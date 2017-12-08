@@ -13,7 +13,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // The string will appear to the user in the login screen
     // you can put your app's name
-    final String REALM_PARAM = "YourAppName";
+    private final String REALM_PARAM = "FubGaming";
 
 
     @Override
@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
         final WebView webView = new WebView(this);
         webView.getSettings().setJavaScriptEnabled(true);
 
-        final Activity activity = this;
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -43,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
                     String userId = userAccountUrl.getLastPathSegment();
 
                     // Do whatever you want with the user's steam id
+                    SaveSharedPreferences.setSteamId(LoginActivity.this, Long.parseLong(userId));
                     Log.e("ID:", userId);
+                    LoginActivity.this.finish();
                 }
             }
         });

@@ -1,6 +1,10 @@
 package com.nickljackson.fubgaming;
 
 
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +22,7 @@ import com.nickljackson.fubgaming.data.ListItemDataSource;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 
 
 /**
@@ -59,7 +62,11 @@ public class MemberFragment extends Fragment implements ViewInterface{
                 new SwipeRefreshLayout.OnRefreshListener(){
                     @Override
                     public void onRefresh() {
-                        controller.update();
+                        if(isOnline()) {
+                            controller.update();
+                        } else {
+                            updateAdapterAndView(SaveSharedPreferences.getMemberList(getContext()));
+                        }
                     }
                 }
         );
@@ -70,6 +77,7 @@ public class MemberFragment extends Fragment implements ViewInterface{
     @Override
     public void updateAdapterAndView(ArrayList<ListItem> pListOfData) {
         this.listOfData = pListOfData;
+        saveList(pListOfData);
         this.adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -91,7 +99,6 @@ public class MemberFragment extends Fragment implements ViewInterface{
         @Override
         public void onBindViewHolder(CustomViewHolder holder, int position) {
             ListItem currentItem = listOfData.get(position);
-
             Picasso.with(getContext()).load(currentItem.getAvatar()).into(holder.avatar);
             holder.name.setText(
                     currentItem.getName()
@@ -139,6 +146,21 @@ public class MemberFragment extends Fragment implements ViewInterface{
             }
         }
     }
+    private void saveList(ArrayList<ListItem> pList) {
+        ArrayList<ListItem> temp = new ArrayList<>();
+        for(int i = 0; i < pList.size(); i++) {
+            ListItem l = pList.get(i);
+            temp.add(new ListItem("no connection", l.getName(), l.getAvatar()));
+        }
+        SaveSharedPreferences.setMemberList(getContext(),temp);
 
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 
 }
